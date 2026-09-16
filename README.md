@@ -1,5 +1,5 @@
 <p align="center">
-  <img alt="header" src="https://shieldcn.dev/header/surface.svg?title=DailyTune&amp;subtitle=Discover+a+new+song+every+day%21&amp;mode=dark" />
+  <img alt="header" src="https://shieldcn.dev/header/surface.svg?title=SongSip&amp;subtitle=Discover+a+new+song+every+day%21&amp;mode=dark" />
 </p>
 
 ## Welkom bij SongSip
