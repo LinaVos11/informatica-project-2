@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Muziek Project - Dashboard</title>
+    <style>
+        body {
+            background-color: #1a0f11;
+            color: #f4efe6;
+            font-family: 'Georgia', serif;
+            margin: 0;
+            padding: 40px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+        header h1 {
+            color: #d4af37;
+            font-size: 2.5rem;
+            margin-bottom: 5px;
+            font-weight: normal;
+        }
+        header p {
+            color: #bfa89e;
+            margin-top: 0;
+            margin-bottom: 25px;
+        }
+        main {
+            background-color: #2c1619;
+            padding: 40px;
+            border-radius: 4px;
+            border: 1px solid #d4af37;
+            max-width: 500px;
+            width: 100%;
+            margin-top: 10px;
+            box-sizing: border-box;
+        }
+        h2 {
+            font-size: 1.5rem;
+            color: #f4efe6;
+            font-weight: normal;
+            margin-bottom: 25px;
+        }
+        select {
+            background-color: #1a0f11;
+            color: #f4efe6;
+            border: 1px solid #bfa89e;
+            padding: 10px 15px;
+            font-size: 16px;
+            font-family: 'Georgia', serif;
+            width: 80%;
+            cursor: pointer;
+            outline: none;
+        }
+        #ontdek-knop {
+            margin-top: 30px;
+            padding: 12px 30px;
+            font-size: 16px;
+            font-family: 'Georgia', serif;
+            background-color: #d4af37;
+            color: #1a0f11;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+        }
+        #ontdek-knop:hover {
+            background-color: #f4efe6;
+            color: #2c1619;
+        }
+        #resultaat {
+            margin-top: 30px;
+            padding: 20px;
+            border-top: 1px dashed #d4af37;
+            display: none; 
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Website Titel</h1>
+        <p>Welkom terug. Kies een genre om een nummer te ontdekken.</p>
+    </header>
+
+    <main>
+        <section id="genre-kiezer">
+            <h2>Kies een genre</h2>
+            
+            <select id="genres">
+                <option value="rock">Rock</option>
+                <option value="pop">Pop</option>
+                <option value="techno">Techno</option>
+                <option value="hiphop">Hip Hop</option>
+                <option value="jazz">Jazz</option>
+            </select>
+
+            <br>
+            <button id="ontdek-knop">
+                NUMMER ZOEKEN
+            </button>
+        </section>
+
+        <section id="resultaat">
+            <h3>Resultaat:</h3>
+            <div id="muziek-box">
+                <p>Aan het laden...</p>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        const ontdekKnop = document.getElementById('ontdek-knop');
+        const genreSelect = document.getElementById('genres');
+        const resultaatSectie = document.getElementById('resultaat');
+        const muziekBox = document.getElementById('muziek-box');
+
+        ontdekKnop.addEventListener('click', function() {
+            const gekozenGenre = genreSelect.value;
+            resultaatSectie.style.display = 'block';
+            muziekBox.innerHTML = '<p>Er wordt gezocht naar een ' + gekozenGenre + ' nummer...</p>';
+        });
+    </script>
+
+</body>
+</html>
