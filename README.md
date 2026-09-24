@@ -50,6 +50,22 @@ SongSip is een website waar je elke dag een nieuw liedje kan ontdekken. In plaat
 * "jouw muzieksmaak"
 * aanbevelingen op basis van eerdere likes
 
+Frontend
+HTML + CSS
+       ↓
+Flask
+       ↓
+Python
+ ┌─────┴───────────┐
+ ↓                 ↓
+Dataset          Database
+ ↓                 ↓
+Muziek          Gebruikers
+                 Likes
+                 Gezien
+       ↓
+Spotify API
+
 # Projectfasen
 
 ### Fase 1 — Voorbereiding
