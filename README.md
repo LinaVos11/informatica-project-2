@@ -18,6 +18,38 @@ SongSip is een website waar je elke dag een nieuw liedje kan ontdekken. In plaat
 
 * onder voorbehoud, kan verschoven worden
 
+# Functionaliteiten: 
+* gebruiker kan inloggen met Spotify
+* gebruiker kan genre kiezen
+* website geeft een nummer
+* nummer moet uit de dataset komen
+* nummer mag niet eerder aan deze gebruiker zijn voorgeschoteld
+* informatie over nummer wordt weergegeven
+* gebruiker kan Spotify-link openen
+* gebruiker kan nummer liken/disliken
+* website onthoudt voorkeur
+* gebruiker kan later opnieuw inloggen
+
+# MoSCoW-prioriteiten
+
+### Must have
+* genre kiezen
+* nummer selecteren
+* informatie tonen
+* nieuw nummer per gebruiker
+* like/dislike opslaan
+
+### Should have
+* Spotify koppelen
+* mooie albumafbeelding
+* geschiedenis bekijken
+* eenvoudige personalisatie
+
+### Could have
+* statistieken
+* "jouw muzieksmaak"
+* aanbevelingen op basis van eerdere likes
+
 # Projectfasen
 
 ### Fase 1 — Voorbereiding
