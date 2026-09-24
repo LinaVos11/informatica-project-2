@@ -6,7 +6,7 @@
 
 SongSip is een website waar je elke dag een nieuw liedje kan ontdekken. In plaats van eindeloos door afspeellijsten te scrollen, krijgt de bezoeker bij elk bezoek of bij een klik op de knop **één willekeurig nummer** voorgeschoteld.
 
-# Planing 
+# Planning 
 | Week:  |  Wat moet af? |
 |---|---|
 | standup 1-2  | Fase 1  |
