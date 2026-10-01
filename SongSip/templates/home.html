@@ -1,4 +1,4 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="nl">
 <head>
     <meta charset="UTF-8">
@@ -8,20 +8,54 @@
  <body>
         <div class="blijvendebalk">
             <header>
-                <img id="balk" src="{{ url_for('static', filename='images/Resene_Spanish_Green.jpg') }}" alt="Spanish green balk">
+                <img id="balk" src="{{ url_for('static', filename='images/bordeauxrood.png') }}" alt="Bordeaux rood balk">
                 <h1 id="Dehoofdtitel">
-                    <a href="{{ url_for('index') }}">Pantrypal</a>
+                    <a href="{{ url_for('index') }}">Songsip</a>
                 </h1>
             </header>
             <nav>
                 <div class="dropdown">
                     <button class="dropbtn">Menu</button>
                     <div class="dropdown-content">
-                        <a href="/">Home</a>
-                        <a href="#">Why Pantrypal?</a>
-                        <a href="#">Contact</a>
-                        <a href="#">Photo Gallery</a>
+                        <a href="templates/home.html">Home</a>
+                        <a href="templates/about.html">Why Songsip?</a>
+                        <a href="templates/dailysong.html">Song of the Day</a>
+                        <a href="templates/history.html">My songs</a>
                     </div>
                 </div>
             </nav>
         </div>
+
+         <!-- Het gedeelte waar je een genre kiest -->
+    <main>
+        <section id="genre-kiezer">
+            <h2>Waar heb je vandaag zin in?</h2>
+            
+            <label for="genres">Kies een genre:</label>
+            <select id="genres">
+                <option value="rock"> Rock</option>
+                <option value="pop"> Pop</option>
+                <option value="techno"> Techno</option>
+                <option value="hiphop"> Hip Hop</option>
+                <option value="jazz"> Jazz</option>
+            </select>
+
+            <br><br>
+            <!-- De grote actieknop -->
+            <button id="ontdek-knop" style="padding: 10px 20px; font-size: 18px; background-color: #1DB954; color: white; border: none; border-radius: 20px; cursor: pointer;">
+                Verras me (of pest me)!
+            </button>
+        </section>
+
+        <!-- De plek waar straks het Spotify nummer in verschijnt via JavaScript -->
+        <section id="resultaat" style="margin-top: 40px; padding: 20px; border: 2px dashed #ccc; display: none;">
+            <h3>Jouw nummer voor vandaag:</h3>
+            <div id="muziek-box">
+                <!-- Hier komt straks de Spotify Player te staan -->
+                <p>Aan het laden...</p>
+            </div>
+        </section>
+    </main>
+
+</body>
+</html>
