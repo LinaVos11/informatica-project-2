@@ -1,0 +1,27 @@
+ <!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Songsip- Ontdek nieuwe muziek!</title>
+</head>
+ <body>
+        <div class="blijvendebalk">
+            <header>
+                <img id="balk" src="{{ url_for('static', filename='images/Resene_Spanish_Green.jpg') }}" alt="Spanish green balk">
+                <h1 id="Dehoofdtitel">
+                    <a href="{{ url_for('index') }}">Pantrypal</a>
+                </h1>
+            </header>
+            <nav>
+                <div class="dropdown">
+                    <button class="dropbtn">Menu</button>
+                    <div class="dropdown-content">
+                        <a href="/">Home</a>
+                        <a href="#">Why Pantrypal?</a>
+                        <a href="#">Contact</a>
+                        <a href="#">Photo Gallery</a>
+                    </div>
+                </div>
+            </nav>
+        </div>
