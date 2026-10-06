@@ -1,3 +1,73 @@
-h1 {
-    color: aqua;
-}
+
+    body {
+        background-color: #1a0f11;
+        color: #f4efe6;
+        font-family: 'Georgia', serif;
+        margin: 0;
+        padding: 40px 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+    header h1 {
+        color: #d4af37;
+        font-size: 2.5rem;
+        margin-bottom: 5px;
+        font-weight: normal;
+    }
+    header p {
+        color: #bfa89e;
+        margin-top: 0;
+        margin-bottom: 25px;
+    }
+    main {
+        background-color: #2c1619;
+        padding: 40px;
+        border-radius: 4px;
+        border: 1px solid #d4af37;
+        max-width: 500px;
+        width: 100%;
+        margin-top: 10px;
+        box-sizing: border-box;
+    }
+    h2 {
+        font-size: 1.5rem;
+        color: #f4efe6;
+        font-weight: normal;
+        margin-bottom: 25px;
+    }
+    select {
+        background-color: #1a0f11;
+        color: #f4efe6;
+        border: 1px solid #bfa89e;
+        padding: 10px 15px;
+        font-size: 16px;
+        font-family: 'Georgia', serif;
+        width: 80%;
+        cursor: pointer;
+        outline: none;
+    }
+    #ontdek-knop {
+        margin-top: 30px;
+        padding: 12px 30px;
+        font-size: 16px;
+        font-family: 'Georgia', serif;
+        background-color: #d4af37;
+        color: #1a0f11;
+        border: none;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-weight: bold;
+    }
+    #ontdek-knop:hover {
+        background-color: #f4efe6;
+        color: #2c1619;
+    }
+    #resultaat {
+        margin-top: 30px;
+        padding: 20px;
+        border-top: 1px dashed #d4af37;
+        display: none;
+    }
+
