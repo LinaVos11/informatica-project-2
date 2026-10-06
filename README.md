@@ -6,6 +6,77 @@
 
 SongSip is een website waar je elke dag een nieuw liedje kan ontdekken. In plaats van eindeloos door afspeellijsten te scrollen, krijgt de bezoeker bij elk bezoek of bij een klik op de knop **één willekeurig nummer** voorgeschoteld.
 
+# Planning 
+| Week:  |  Wat moet af? |
+|---|---|
+| standup 1-2  | Fase 1  |
+| standup 3  | goed begin fase 2 |
+| standup 4    | fase 2 af, start fase 3  |
+| standup 5  | sprint review & verder fase 3  |
+| standup 6  | fase 3 af, begin aan fase 5 en 6  |
+| eindpresentatie | alles af |
+
+* onder voorbehoud, kan verschoven worden
+
+# Functionaliteiten: 
+* gebruiker kan inloggen met Spotify
+* gebruiker kan genre kiezen
+* website geeft een nummer
+* nummer moet uit de dataset komen
+* nummer mag niet eerder aan deze gebruiker zijn voorgeschoteld
+* informatie over nummer wordt weergegeven
+* gebruiker kan Spotify-link openen
+* gebruiker kan nummer liken/disliken
+* website onthoudt voorkeur
+* gebruiker kan later opnieuw inloggen
+
+# MoSCoW-prioriteiten
+
+### Must have
+* genre kiezen
+* nummer selecteren
+* informatie tonen
+* nieuw nummer per gebruiker
+* like/dislike opslaan
+
+### Should have
+* Spotify koppelen
+* mooie albumafbeelding
+* geschiedenis bekijken
+* eenvoudige personalisatie
+
+### Could have
+* statistieken
+* "jouw muzieksmaak"
+* aanbevelingen op basis van eerdere likes
+
+
+# Architectuur website
+
+
+                    Website
+                       │
+                 HTML + CSS
+                       │
+                       ▼
+                     Flask
+                       │
+                     Python
+                  ┌────┴────┐
+                  │         │
+                  ▼         ▼
+               Dataset   Database
+                  │         │
+                  ▼         ├── Gebruikers
+                Muziek      ├── Likes
+                            └── Gezien
+                  │
+                  └──────────┐
+                             ▼
+                        Spotify API
+                             │
+                             ▼
+                    Spotify-account
 
 # Projectfasen
 
