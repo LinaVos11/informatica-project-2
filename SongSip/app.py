@@ -1,5 +1,6 @@
 import csv
 import io
+import random
 import zipfile
 from pathlib import Path
 
@@ -34,15 +35,25 @@ def songs_api():
     genre = (request.args.get("genre") or "").strip().lower()
     tracks = load_tracks()
 
-    if genre:
+    if genre and genre not in {"random", "willekeurig"}:
+        normalized_genre = "".join(character for character in genre if character.isalnum())
+        if not normalized_genre:
+            return jsonify({"error": f"Ongeldig genre '{genre}'"}), 400
         tracks = [
-            track for track in tracks if genre in (track.get("track_genre") or "").lower()
+            track
+            for track in tracks
+            if normalized_genre
+            in "".join(
+                character
+                for character in (track.get("track_genre") or "").lower()
+                if character.isalnum()
+            )
         ]
 
     if not tracks:
         return jsonify({"error": f"Geen nummers gevonden voor genre '{genre}'"}), 404
 
-    return jsonify(tracks[:10])
+    return jsonify(random.sample(tracks, min(10, len(tracks))))
 
 
 @app.route("/about")
