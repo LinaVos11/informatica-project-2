@@ -39,7 +39,7 @@
                 <option value="techno"> Techno</option>
                 <option value="hiphop"> Hip Hop</option>
                 <option value="jazz"> Jazz</option>               
-                <option value="Willekeurig"> Willekeurig</option>
+                <option value="random"> Willekeurig</option>
             </select>
 
             <br><br>
@@ -69,10 +69,12 @@
 
             fetch('/api/songs?genre=' + encodeURIComponent(gekozenGenre))
                 .then(function(response) {
-                    if (!response.ok) {
-                        throw new Error('Geen nummers gevonden');
-                    }
-                    return response.json();
+                    return response.json().then(function(data) {
+                        if (!response.ok) {
+                            throw new Error(data.error || 'Nummers konden niet worden geladen.');
+                        }
+                        return data;
+                    });
                 })
                 .then(function(data) {
                     if (!Array.isArray(data) || data.length === 0) {
@@ -91,11 +93,10 @@
                 })
                 .catch(function(error) {
                     console.error(error);
-                    muziekBox.innerHTML = '<p>Er is iets misgegaan bij het ophalen van het nummer.</p>';
+                    muziekBox.textContent = error.message || 'Er is iets misgegaan bij het ophalen van het nummer.';
                 });
         });
     </script>
 
 </body>
 </html>
-
