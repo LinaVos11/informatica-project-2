@@ -32,14 +32,20 @@
         <section id="genre-kiezer">
             <h2>Waar heb je vandaag zin in?</h2>
 
-            <label for="genres">Kies een genre:</label>
+            <label for="genres">Kies een muziekcategorie:</label>
             <select id="genres">
-                <option value="rock"> Rock</option>
-                <option value="pop"> Pop</option>
-                <option value="techno"> Techno</option>
-                <option value="hiphop"> Hip Hop</option>
-                <option value="jazz"> Jazz</option>               
-                <option value="random"> Willekeurig</option>
+                <option value="rock-metal">Rock en metal</option>
+                <option value="pop-indie">Pop en indie</option>
+                <option value="electronic-dance">Elektronisch en dance</option>
+                <option value="hip-hop-rnb">Hip-hop en R&amp;B</option>
+                <option value="jazz-blues-funk-soul">Jazz, blues, funk en soul</option>
+                <option value="folk-country-acoustic">Folk, country en akoestisch</option>
+                <option value="latin-south-america">Latin en Zuid-Amerikaans</option>
+                <option value="reggae-afro-caribbean">Reggae en ritmes uit Afrika en het Caribisch gebied</option>
+                <option value="regional-international">Regionaal en internationaal</option>
+                <option value="classical-instrumental">Klassiek en instrumentaal</option>
+                <option value="mood-activities-other">Sfeer, activiteiten en overige</option>
+                <option value="random">Willekeurig</option>
             </select>
 
             <br><br>
@@ -65,7 +71,8 @@
         ontdekKnop.addEventListener('click', function() {
             const gekozenGenre = genreSelect.value;
             resultaatSectie.style.display = 'block';
-            muziekBox.innerHTML = '<p>Er wordt gezocht naar een ' + gekozenGenre + ' nummer...</p>';
+            const gekozenCategorie = genreSelect.options[genreSelect.selectedIndex].textContent;
+            muziekBox.innerHTML = '<p>Er wordt gezocht in ' + gekozenCategorie + '...</p>';
 
             fetch('/api/songs?genre=' + encodeURIComponent(gekozenGenre))
                 .then(function(response) {
