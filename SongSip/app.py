@@ -1,6 +1,22 @@
-from flask import Flask, render_template
+import csv
+import io
+import zipfile
+from pathlib import Path
+
+from flask import Flask, jsonify, render_template, request
 
 app = Flask(__name__)
+
+BASE_DIR = Path(__file__).resolve().parent
+CSV_ZIP_PATH = BASE_DIR / "spotify_tracks.csv.zip"
+CSV_NAME = "spotify-tracks-dataset-detailed.csv"
+
+
+def load_tracks():
+    with zipfile.ZipFile(CSV_ZIP_PATH) as archive:
+        with archive.open(CSV_NAME) as csv_file:
+            text_stream = io.TextIOWrapper(csv_file, encoding="utf-8")
+            return list(csv.DictReader(text_stream))
 
 
 @app.route("/")
@@ -11,6 +27,22 @@ def index():
 @app.route("/home")
 def home():
     return render_template("home.html")
+
+
+@app.route("/api/songs")
+def songs_api():
+    genre = (request.args.get("genre") or "").strip().lower()
+    tracks = load_tracks()
+
+    if genre:
+        tracks = [
+            track for track in tracks if genre in (track.get("track_genre") or "").lower()
+        ]
+
+    if not tracks:
+        return jsonify({"error": f"Geen nummers gevonden voor genre '{genre}'"}), 404
+
+    return jsonify(tracks[:10])
 
 
 @app.route("/about")

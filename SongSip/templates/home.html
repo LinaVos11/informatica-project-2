@@ -65,6 +65,33 @@
             const gekozenGenre = genreSelect.value;
             resultaatSectie.style.display = 'block';
             muziekBox.innerHTML = '<p>Er wordt gezocht naar een ' + gekozenGenre + ' nummer...</p>';
+
+            fetch('/api/songs?genre=' + encodeURIComponent(gekozenGenre))
+                .then(function(response) {
+                    if (!response.ok) {
+                        throw new Error('Geen nummers gevonden');
+                    }
+                    return response.json();
+                })
+                .then(function(data) {
+                    if (!Array.isArray(data) || data.length === 0) {
+                        muziekBox.innerHTML = '<p>Geen nummers gevonden voor dit genre.</p>';
+                        return;
+                    }
+
+                    const song = data[Math.floor(Math.random() * data.length)];
+                    muziekBox.innerHTML = `
+                        <h4>${song.track_name}</h4>
+                        <p><strong>Artiest:</strong> ${song.artists}</p>
+                        <p><strong>Album:</strong> ${song.album_name}</p>
+                        <p><strong>Genre:</strong> ${song.track_genre}</p>
+                        <p><strong>Populariteit:</strong> ${song.popularity}</p>
+                    `;
+                })
+                .catch(function(error) {
+                    console.error(error);
+                    muziekBox.innerHTML = '<p>Er is iets misgegaan bij het ophalen van het nummer.</p>';
+                });
         });
     </script>
 
