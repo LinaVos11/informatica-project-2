@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About us - SongSip</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='songsip.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='about-us.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='footer.css') }}">
+</head>
+<body>
+    <div class="blijvendebalk">
+        <header>
+            <img id="balk" src="{{ url_for('static', filename='images/bordeauxrood.png') }}" alt="Bordeaux red banner">
+            <h1 id="Dehoofdtitel">
+                <a href="{{ url_for('index') }}">SongSip</a>
+            </h1>
+        </header>
+        <nav aria-label="Main navigation">
+            <div class="dropdown">
+                <button class="dropbtn" type="button">Menu</button>
+                <div class="dropdown-content">
+                    <a href="{{ url_for('home') }}">Home</a>
+                    <a href="{{ url_for('about') }}" aria-current="page">About us</a>
+                    <a href="{{ url_for('dailysong') }}">Song of the Day</a>
+                    <a href="{{ url_for('history') }}">My songs</a>
+                </div>
+            </div>
+        </nav>
+    </div>
+
+    <main class="about-page">
+        <article class="about-card">
+            <p class="eyebrow">A little more about us</p>
+            <h2>Welcome to SongSip</h2>
+            <p>
+                SongSip is a website made to help you discover a new song every day.
+                We believe that every song has a story waiting to be heard, and maybe
+                one of those stories will become part of yours.
+            </p>
+            <p>
+                Every day, you choose the genre you want to explore. Whether you're
+                in the mood for pop, rock, indie, country, R&amp;B, alternative, or
+                something completely different, there's always something new waiting
+                for you.
+            </p>
+            <p>
+                With so many songs in the world, it's easy to keep listening to the
+                same playlists and the same favourites. SongSip is here to help you
+                step outside your usual music bubble and discover something you might
+                never have found on your own. You don't have to love every song.
+                Maybe you'll find a new favourite artist, discover a song that
+                perfectly matches your mood, or simply hear a story you've never
+                heard before.
+            </p>
+            <p>
+                SongSip is designed to connect with your Spotify account and check
+                whether a recommended song is already one of your favourites.
+            </p>
+            <p class="closing">So, when you're ready, click the button and discover your new song.</p>
+            <p>Lots of fun listening!</p>
+            <p class="team-signoff">Pam, Sara, Lina, Stephanie and Mirthe</p>
+        </article>
+
+        <section class="about-slogans" aria-label="SongSip slogans">
+            <p>Choose your genre, press play, and give today's song a chance. Sometimes, a song you've never heard before can become the song you never want to forget.</p>
+            <p class="short-slogan">One day. One genre. One new song to discover.</p>
+            <p class="short-slogan">Music is the soundtrack of your life.</p>
+        </section>
+    </main>
+    {% include '_footer.html' %}
+</body>
+</html>
