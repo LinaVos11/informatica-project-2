@@ -1,0 +1,22 @@
+.site-footer {
+    width: 100%;
+    flex-shrink: 0;
+    margin-top: auto;
+    padding: 24px 20px;
+    box-sizing: border-box;
+    background-color: #2c1619;
+    border-top: 1px solid #d4af37;
+    color: #bfa89e;
+    font-family: Georgia, serif;
+    text-align: center;
+}
+
+.site-footer p {
+    margin: 4px 0;
+}
+
+.site-footer .site-footer-name {
+    color: #d4af37;
+    font-size: 1.15rem;
+    font-weight: bold;
+}
