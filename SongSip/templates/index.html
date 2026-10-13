@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Muziek Project - Inloggen</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='index.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='footer.css') }}">
 </head>
 <body>
 
@@ -16,6 +17,8 @@
             LOG IN MET SPOTIFY
         </button>
     </header>
+
+    {% include '_footer.html' %}
 
     <script>
         const loginKnop = document.getElementById('spotify-login-knop');
