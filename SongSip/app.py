@@ -103,11 +103,6 @@ def about():
     return render_template("about.html")
 
 
-@app.route("/dailysong")
-def dailysong():
-    return render_template("dailysong.html")
-
-
 @app.route("/history")
 def history():
     return render_template("history.html")
