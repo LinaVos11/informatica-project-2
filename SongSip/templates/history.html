@@ -4,10 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My songs - SongSip</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='songsip.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='index.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='footer.css') }}">
 </head>
 <body>
-    {% include '_footer.html' %}
+    <footer class="site-footer">
+        <p class="site-footer-name">SongSip</p>
+        <p>Made by Pam, Sara, Lina, Stephanie and Mirthe</p>
+    </footer>
 </body>
 </html>

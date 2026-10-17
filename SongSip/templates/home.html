@@ -6,7 +6,6 @@
     <title>Songsip - Ontdek nieuwe muziek!</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='songsip.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='home.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='footer.css') }}">
     <!-- Connectie met Google Fonts voor titel font-->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -17,7 +16,7 @@
         <header>
             <img id="balk" src="{{ url_for('static', filename='images/bordeauxrood.png') }}" alt="Bordeaux rood balk">
             <h1 id="Dehoofdtitel">
-                <a href="{{ url_for('index') }}">Songsip</a>
+                <a href="{{ url_for('index') }}">SONGSIP</a>
             </h1>
         </header>
         <nav>
@@ -109,6 +108,9 @@
         });
     </script>
 
-    {% include '_footer.html' %}
+    <footer class="site-footer">
+        <p class="site-footer-name">SongSip</p>
+        <p>Made by Pam, Sara, Lina, Stephanie and Mirthe</p>
+    </footer>
 </body>
 </html>
