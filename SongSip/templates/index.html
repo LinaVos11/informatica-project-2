@@ -6,11 +6,16 @@
     <title>Muziek Project - Inloggen</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='index.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='footer.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='songsip.css') }}">
+    <!-- Connectie met Google Fonts voor titel font-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Monoton&display=swap" rel="stylesheet">
 </head>
 <body>
 
     <header>
-        <h1>Song sip</h1>
+        <h1 id="Dehoofdtitel">Song sip</h1>
         <p>Ontdek elke dag een nieuw nummer op basis van uw stemming.</p>
         
         <button id="spotify-login-knop">

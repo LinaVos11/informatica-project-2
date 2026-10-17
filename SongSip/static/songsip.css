@@ -27,12 +27,12 @@ header {
 #Dehoofdtitel a {
   text-decoration: none; 
   color: black; 
-  font-family: "Bebas Neue";
-  font-size: 4cap;
+  font-family: "Monoton", sans-serif;
+  font-size: 3cap;
 }
 
 #Dehoofdtitel a:hover {
-  color: #444444;           
+  color: #390505;           
 }
 
 .blijvendebalk {
