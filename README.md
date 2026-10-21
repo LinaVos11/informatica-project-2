@@ -26,6 +26,7 @@ SongSip is een website waar je elke dag een nieuw liedje kan ontdekken. In plaat
 * nummer mag niet eerder aan deze gebruiker zijn voorgeschoteld
 * informatie over nummer wordt weergegeven
 * gebruiker kan Spotify-link openen
+* genres van opgeslagen nummers en recente afspeelbeurten worden gebruikt om binnen de gekozen muziekgroep vaker een passend datasetgenre aan te bevelen
 * gebruiker kan nummer liken/disliken
 * website onthoudt voorkeur
 * gebruiker kan later opnieuw inloggen
@@ -130,7 +131,5 @@ SongSip is een website waar je elke dag een nieuw liedje kan ontdekken. In plaat
 ### Eindresultaat
 
 Een website waarop gebruikers met hun Spotify-account kunnen inloggen, een genre kunnen kiezen en dagelijks een nieuw nummer uit onze dataset kunnen ontdekken. De website onthoudt welke nummers de gebruiker al heeft gezien en welke nummers de gebruiker leuk of niet leuk vond.
-
-
 
 
