@@ -87,13 +87,12 @@
                     });
                 })
                 .then(function(data) {
-                    if (!Array.isArray(data) || data.length === 0) {
-                        muziekBox.innerHTML = '<p>Geen nummers gevonden voor dit genre.</p>';
-                        return;
-                    }
-
-                    const song = data[Math.floor(Math.random() * data.length)];
+                    const song = data.song;
                     muziekBox.innerHTML = `
+                        <p>${data.personalized
+                            ? 'Aanbevolen op basis van je opgeslagen nummers en recent afgespeelde muziek.'
+                            : 'Geen overeenkomst met je Spotify-muzieksmaak gevonden; dit nummer is willekeurig gekozen.'}
+                        </p>
                         <h4>${song.track_name}</h4>
                         <p><strong>Artiest:</strong> ${song.artists}</p>
                         <p><strong>Album:</strong> ${song.album_name}</p>
