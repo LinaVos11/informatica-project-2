@@ -22,12 +22,38 @@
 }
 
 #spotify-login-knop {
+    display: inline-block;
     background-color: var(--burgundy-light);
     color: var(--cream);
     border: 1px solid var(--border);
     padding: 15px 30px;
+    font-family: 'Georgia', serif;
+    font-size: 16px;
+    font-weight: bold;
+    text-decoration: none;
+    cursor: pointer;
 }
 
 #spotify-login-knop:hover {
     background-color: #7A2938;
+}
+
+.login-message,
+.login-success {
+    color: var(--cream);
+    line-height: 1.6;
+}
+
+.login-message.error {
+    color: #f4a7a7;
+}
+
+.login-message.success {
+    color: #a8e6b0;
+}
+
+.continue-link {
+    display: inline-block;
+    margin: 0 0 20px;
+    color: var(--cream);
 }
