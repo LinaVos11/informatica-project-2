@@ -16,26 +16,36 @@
     <header class="login-header">
         <h1 id="Dehoofdtitel">Song sip</h1>
         <p>Ontdek elke dag een nieuw nummer op basis van uw stemming.</p>
-        
-        <button id="spotify-login-knop">
-            LOG IN MET SPOTIFY
-        </button>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% for category, message in messages %}
+                <p class="login-message {{ category }}" role="status">{{ message }}</p>
+            {% endfor %}
+        {% endwith %}
+
+        {% if session.get('spotify_user') %}
+            <p class="login-success">
+                Ingelogd als <strong>{{ session['spotify_user']['display_name'] }}</strong>
+            </p>
+            <p>
+                SongSip gebruikt genres van opgeslagen nummers en je 50 meest recente
+                afspeelbeurten die ook in onze dataset staan om passende genres vaker aan te
+                bevelen. Alleen overeenkomende Spotify-ID's en genre-aantallen worden lokaal
+                opgeslagen en verwijderd wanneer je uitlogt.
+            </p>
+            <a class="continue-link" href="{{ url_for('home') }}">Ga naar de nummers</a>
+            <form action="{{ url_for('spotify_logout') }}" method="post">
+                <button id="spotify-login-knop" type="submit">LOG UIT</button>
+            </form>
+        {% else %}
+            <a id="spotify-login-knop" href="{{ url_for('spotify_login') }}">LOG IN MET SPOTIFY</a>
+        {% endif %}
     </header>
 
     <footer class="site-footer">
         <p class="site-footer-name">SongSip</p>
         <p>Made by Pam, Sara, Lina, Stephanie and Mirthe</p>
     </footer>
-
-    <script>
-        const loginKnop = document.getElementById('spotify-login-knop');
-        
-        loginKnop.addEventListener('click', function() {
-            // Voor nu sturen we de gebruiker handmatig door naar de startpagina.
-            // Straks gaat hier de echte Spotify inlog-koppeling tussen zitten!
-            window.location.href = "{{ url_for('home') }}";
-        });
-    </script>
 
 </body>
 </html>
