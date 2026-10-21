@@ -1,1 +1,5 @@
 SongSip/index.html
+.env
+SongSip/songsip.sqlite3
+SongSip/songsip.sqlite3-shm
+SongSip/songsip.sqlite3-wal
