@@ -86,20 +86,97 @@
                         return data;
                     });
                 })
+                
                 .then(function(data) {
                     const song = data.song;
+
                     muziekBox.innerHTML = `
                         <p>${data.personalized
                             ? 'Aanbevolen op basis van je opgeslagen nummers en recent afgespeelde muziek.'
-                            : 'Geen overeenkomst met je Spotify-muzieksmaak gevonden; dit nummer is willekeurig gekozen.'}
+                            : 'Dit nummer is willekeurig gekozen.'}
                         </p>
+
                         <h4>${song.track_name}</h4>
                         <p><strong>Artiest:</strong> ${song.artists}</p>
                         <p><strong>Album:</strong> ${song.album_name}</p>
                         <p><strong>Genre:</strong> ${song.track_genre}</p>
                         <p><strong>Populariteit:</strong> ${song.popularity}</p>
+
+                        <div class="song-feedback">
+                            <h4>Wat vind je van dit nummer?</h4>
+
+                            <button id="like-knop" type="button">
+                                👍 Like
+                            </button>
+
+                            <button id="dislike-knop" type="button">
+                                👎 Dislike
+                            </button>
+
+                            <p id="feedback-bericht" aria-live="polite"></p>
+                        </div>
                     `;
+
+                    function beoordeelNummer(rating) {
+                        const bericht = document.getElementById('feedback-bericht');
+                        const likeKnop = document.getElementById('like-knop');
+                        const dislikeKnop = document.getElementById('dislike-knop');
+
+                        likeKnop.disabled = true;
+                        dislikeKnop.disabled = true;
+                        bericht.textContent = 'Beoordeling opslaan...';
+
+                        fetch('/api/rating', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({
+                                track_id: song.track_id,
+                                rating: rating
+                            })
+                        })
+                        .then(function(response) {
+                            return response.json().then(function(data) {
+                                if (!response.ok) {
+                                    throw new Error(
+                                        data.error || 'Opslaan is niet gelukt.'
+                                    );
+                                }
+                                return data;
+                            });
+                        })
+                        .then(function() {
+                            bericht.textContent = rating === 1
+                                ? 'Je vindt dit nummer leuk! 👍'
+                                : 'Je vindt dit nummer niet leuk. 👎';
+
+                            likeKnop.disabled = false;
+                            dislikeKnop.disabled = false;
+                        })
+                        .catch(function(error) {
+                            bericht.textContent = error.message;
+
+                            likeKnop.disabled = false;
+                            dislikeKnop.disabled = false;
+                        });
+                    }
+
+                    document.getElementById('like-knop').addEventListener(
+                        'click',
+                        function() {
+                            beoordeelNummer(1);
+                        }
+                    );
+
+                    document.getElementById('dislike-knop').addEventListener(
+                        'click',
+                        function() {
+                            beoordeelNummer(-1);
+                        }
+                    );
                 })
+
                 .catch(function(error) {
                     console.error(error);
                     muziekBox.textContent = error.message || 'Er is iets misgegaan bij het ophalen van het nummer.';

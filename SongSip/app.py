@@ -66,6 +66,16 @@ def ensure_database_schema(connection):
             PRIMARY KEY (session_id, genre)
         )"""
     )
+    
+    connection.execute(
+        """CREATE TABLE IF NOT EXISTS song_ratings (
+            session_id TEXT NOT NULL,
+            track_id TEXT NOT NULL,
+            rating INTEGER NOT NULL CHECK (rating IN (-1, 1)),
+            PRIMARY KEY (session_id, track_id)
+        )"""
+    )
+
 
 
 def fetch_saved_dataset_track_ids(access_token):
@@ -559,6 +569,36 @@ def songs_api():
     )
 
 
+
+@app.route("/api/rating", methods=["POST"])
+def rate_song():
+    session_id = session.get("spotify_session_id")
+
+    if not session_id or not session.get("spotify_user"):
+        return jsonify({"error": "Log eerst in."}), 401
+
+    data = request.get_json(silent=True) or {}
+    track_id = data.get("track_id")
+    rating = data.get("rating")
+
+    if not isinstance(track_id, str) or not track_id.strip():
+        return jsonify({"error": "Ongeldig nummer."}), 400
+
+    if type(rating) is not int or rating not in (-1, 1):
+        return jsonify({"error": "Ongeldige beoordeling."}), 400
+
+    with closing(sqlite3.connect(DATABASE_PATH)) as connection, connection:
+        ensure_database_schema(connection)
+        connection.execute(
+            """INSERT INTO song_ratings
+               (session_id, track_id, rating)
+               VALUES (?, ?, ?)
+               ON CONFLICT(session_id, track_id)
+               DO UPDATE SET rating = excluded.rating""",
+            (session_id, track_id, rating),
+        )
+
+    return jsonify({"success": True, "rating": rating})
 @app.route("/about")
 def about():
     return render_template("about.html")
