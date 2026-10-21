@@ -38,6 +38,12 @@ class SpotifyApiError(Exception):
         self.status_code = status_code
 
 
+def clear_pending_spotify_login():
+    session.pop("spotify_oauth_state", None)
+    session.pop("spotify_session_id", None)
+    session.pop("spotify_user", None)
+
+
 def ensure_database_schema(connection):
     connection.execute(
         """CREATE TABLE IF NOT EXISTS spotify_saved_tracks (
@@ -384,10 +390,16 @@ def spotify_callback():
             profile = json.loads(response.read().decode())
     except urllib.error.HTTPError as exc:
         app.logger.warning("Spotify profile request returned HTTP %s", exc.code)
-        flash("Je Spotify-profiel kon niet worden opgehaald. Probeer opnieuw.", "error")
+        clear_pending_spotify_login()
+        flash(
+            f"Je Spotify-profiel kon niet worden opgehaald (HTTP {exc.code}). "
+            "Controleer de Spotify-app en probeer opnieuw.",
+            "error",
+        )
         return redirect(url_for("index"))
     except urllib.error.URLError:
         app.logger.exception("Could not reach Spotify profile endpoint")
+        clear_pending_spotify_login()
         flash("Spotify is tijdelijk niet bereikbaar. Probeer het later opnieuw.", "error")
         return redirect(url_for("index"))
 
