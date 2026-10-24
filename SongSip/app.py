@@ -13,6 +13,7 @@ import urllib.request
 import zipfile
 from contextlib import closing
 from pathlib import Path
+from database import init_db, save_rating, mark_listened, get_listened_track_ids
 
 from flask import Flask, flash, jsonify, redirect, render_template, request, session, url_for
 from dotenv import load_dotenv
@@ -610,4 +611,5 @@ def history():
 
 
 if __name__ == "__main__":
+    init_db()
     app.run(debug=True)
