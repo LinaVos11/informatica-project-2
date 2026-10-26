@@ -29,6 +29,18 @@ def init_db():
             )
         """)
 
+        connection.execute("""
+            CREATE TABLE IF NOT EXISTS recommended_tracks (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                session_id TEXT NOT NULL,
+                track_id TEXT NOT NULL,
+                track_name TEXT NOT NULL,
+                artists TEXT NOT NULL,
+                album_name TEXT NOT NULL,
+                recommended_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
+            )
+        """)
+
 
 def save_rating(session_id, track_id, rating):
     if rating not in (-1, 1):
@@ -49,6 +61,53 @@ def mark_listened(session_id, track_id):
             INSERT OR IGNORE INTO listened_tracks (session_id, track_id)
             VALUES (?, ?)
         """, (session_id, track_id))
+
+
+def record_recommendation(session_id, track):
+    init_db()
+    with closing(get_connection()) as connection, connection:
+        connection.execute("""
+            INSERT INTO recommended_tracks
+                (session_id, track_id, track_name, artists, album_name)
+            VALUES (?, ?, ?, ?, ?)
+        """, (
+            session_id,
+            track["track_id"],
+            track.get("track_name") or "",
+            track.get("artists") or "",
+            track.get("album_name") or "",
+        ))
+
+
+def get_recommendations(session_id):
+    init_db()
+    with closing(get_connection()) as connection:
+        rows = connection.execute("""
+            SELECT recommended_tracks.track_id,
+                   recommended_tracks.track_name,
+                   recommended_tracks.artists,
+                   recommended_tracks.album_name,
+                   recommended_tracks.recommended_at,
+                   song_ratings.rating
+            FROM recommended_tracks
+            LEFT JOIN song_ratings
+                ON song_ratings.session_id = recommended_tracks.session_id
+                AND song_ratings.track_id = recommended_tracks.track_id
+            WHERE recommended_tracks.session_id = ?
+            ORDER BY recommended_tracks.id DESC
+        """, (session_id,)).fetchall()
+
+    return [
+        {
+            "track_id": row[0],
+            "track_name": row[1],
+            "artists": row[2],
+            "album_name": row[3],
+            "recommended_at": row[4],
+            "rating": row[5],
+        }
+        for row in rows
+    ]
 
 
 def get_listened_track_ids(session_id):

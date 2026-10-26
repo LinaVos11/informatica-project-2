@@ -13,7 +13,12 @@ import urllib.request
 import zipfile
 from contextlib import closing
 from pathlib import Path
-from database import init_db, save_rating, mark_listened, get_listened_track_ids
+from database import (
+    get_recommendations,
+    init_db,
+    record_recommendation,
+    save_rating,
+)
 
 from flask import Flask, flash, jsonify, redirect, render_template, request, session, url_for
 from dotenv import load_dotenv
@@ -565,6 +570,8 @@ def songs_api():
     else:
         song = random.choice(tracks)
 
+    record_recommendation(session_id, song)
+
     return jsonify(
         {
             "song": song,
@@ -591,16 +598,7 @@ def rate_song():
     if type(rating) is not int or rating not in (-1, 1):
         return jsonify({"error": "Ongeldige beoordeling."}), 400
 
-    with closing(sqlite3.connect(DATABASE_PATH)) as connection, connection:
-        ensure_database_schema(connection)
-        connection.execute(
-            """INSERT INTO song_ratings
-               (session_id, track_id, rating)
-               VALUES (?, ?, ?)
-               ON CONFLICT(session_id, track_id)
-               DO UPDATE SET rating = excluded.rating""",
-            (session_id, track_id, rating),
-        )
+    save_rating(session_id, track_id, rating)
 
     return jsonify({"success": True, "rating": rating})
 @app.route("/about")
@@ -610,7 +608,14 @@ def about():
 
 @app.route("/history")
 def history():
-    return render_template("history.html")
+    session_id = session.get("spotify_session_id")
+    if not session.get("spotify_user") or not session_id:
+        flash("Log in met Spotify om je aanbevolen nummers te bekijken.", "error")
+        return redirect(url_for("index"))
+    return render_template(
+        "history.html",
+        recommendations=get_recommendations(session_id),
+    )
 
 
 if __name__ == "__main__":

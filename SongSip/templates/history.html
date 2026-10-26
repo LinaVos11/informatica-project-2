@@ -1,13 +1,77 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="nl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My songs - SongSip</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='songsip.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='index.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='history.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Monoton&display=swap" rel="stylesheet">
 </head>
 <body>
+    <div class="blijvendebalk">
+        <header>
+            <img id="balk" src="{{ url_for('static', filename='images/bordeauxrood.png') }}" alt="Bordeaux rode balk">
+            <h1 id="Dehoofdtitel">
+                <a href="{{ url_for('index') }}">SONGSIP</a>
+            </h1>
+        </header>
+        <nav aria-label="Hoofdnavigatie">
+            <div class="dropdown">
+                <button class="dropbtn" type="button" aria-label="Navigatiemenu">Menu</button>
+                <div class="dropdown-content">
+                    <a href="{{ url_for('home') }}">Home</a>
+                    <a href="{{ url_for('about') }}">Why Songsip?</a>
+                    <a href="{{ url_for('history') }}" aria-current="page">My songs</a>
+                </div>
+            </div>
+        </nav>
+    </div>
+
+    <main class="history-page">
+        <h2>My songs</h2>
+        <p>Alle nummers die aan jou zijn aanbevolen.</p>
+
+        {% if recommendations %}
+            <div class="history-table-wrapper">
+                <table class="history-table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Nummer</th>
+                            <th scope="col">Artiest</th>
+                            <th scope="col">Album</th>
+                            <th scope="col">Jouw beoordeling</th>
+                            <th scope="col">Aanbevolen op (UTC)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for song in recommendations %}
+                            <tr class="{% if song.rating == 1 %}liked-song{% endif %}">
+                                <td>{{ song.track_name }}</td>
+                                <td>{{ song.artists }}</td>
+                                <td>{{ song.album_name }}</td>
+                                <td>
+                                    {% if song.rating == 1 %}
+                                        👍 Geliked
+                                    {% elif song.rating == -1 %}
+                                        👎 Disliked
+                                    {% else %}
+                                        Nog niet beoordeeld
+                                    {% endif %}
+                                </td>
+                                <td>{{ song.recommended_at }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% else %}
+            <p class="empty-history">Je hebt nog geen aanbevolen nummers. Ontdek eerst een nummer via Home.</p>
+        {% endif %}
+    </main>
+
     <footer class="site-footer">
         <p class="site-footer-name">SongSip</p>
         <p>Made by Pam, Sara, Lina, Stephanie and Mirthe</p>
