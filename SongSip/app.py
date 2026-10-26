@@ -229,12 +229,15 @@ GENRE_GROUPS = {
     "rock-metal": {
         "alt-rock", "alternative", "black-metal", "death-metal", "emo", "goth",
         "grindcore", "grunge", "hard-rock", "hardcore", "heavy-metal", "industrial",
-        "j-rock", "metal", "metalcore", "psych-rock", "punk", "punk-rock", "rock",
+        "metal", "metalcore", "psych-rock", "punk", "punk-rock", "rock",
         "rock-n-roll", "rockabilly", "ska",
     },
     "pop-indie": {
-        "anime", "cantopop", "disney", "indie", "indie-pop", "j-idol", "j-pop",
-        "k-pop", "mandopop", "pop", "pop-film", "power-pop", "synth-pop",
+        "disney", "indie", "indie-pop", "pop", "pop-film", "power-pop", "synth-pop",
+    },
+    "asian": {
+        "anime", "cantopop", "indian", "j-idol", "j-pop", "j-rock", "k-pop",
+        "mandopop",
     },
     "electronic-dance": {
         "ambient", "breakbeat", "chicago-house", "club", "dance", "deep-house",
@@ -254,7 +257,7 @@ GENRE_GROUPS = {
     },
     "reggae-afro-caribbean": {"afrobeat", "dancehall", "dub", "reggae", "reggaeton"},
     "regional-international": {
-        "british", "french", "german", "indian", "iranian", "malay", "spanish",
+        "british", "french", "german", "iranian", "malay", "spanish",
         "swedish", "turkish", "world-music",
     },
     "classical-instrumental": {"classical", "new-age", "opera", "piano"},
