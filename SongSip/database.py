@@ -55,6 +55,33 @@ def save_rating(session_id, track_id, rating):
         """, (session_id, track_id, rating))
 
 
+def migrate_session_history(session_id, account_id):
+    if not session_id or not account_id or session_id == account_id:
+        return
+
+    init_db()
+    with closing(get_connection()) as connection, connection:
+        connection.execute("""
+            INSERT OR IGNORE INTO song_ratings (session_id, track_id, rating)
+            SELECT ?, track_id, rating
+            FROM song_ratings
+            WHERE session_id = ?
+        """, (account_id, session_id))
+        connection.execute("""
+            INSERT INTO recommended_tracks
+                (session_id, track_id, track_name, artists, album_name, recommended_at)
+            SELECT ?, track_id, track_name, artists, album_name, recommended_at
+            FROM recommended_tracks
+            WHERE session_id = ?
+        """, (account_id, session_id))
+        connection.execute(
+            "DELETE FROM song_ratings WHERE session_id = ?", (session_id,)
+        )
+        connection.execute(
+            "DELETE FROM recommended_tracks WHERE session_id = ?", (session_id,)
+        )
+
+
 def mark_listened(session_id, track_id):
     with closing(get_connection()) as connection, connection:
         connection.execute("""

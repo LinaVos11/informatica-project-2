@@ -16,6 +16,7 @@ from pathlib import Path
 from database import (
     get_recommendations,
     init_db,
+    migrate_session_history,
     record_recommendation,
     save_rating,
 )
@@ -47,6 +48,7 @@ class SpotifyApiError(Exception):
 def clear_pending_spotify_login():
     session.pop("spotify_oauth_state", None)
     session.pop("spotify_session_id", None)
+    session.pop("spotify_account_id", None)
     session.pop("spotify_user", None)
 
 
@@ -313,9 +315,15 @@ def spotify_login():
         )
         return redirect(url_for("index"))
 
-    previous_session_id = session.get("spotify_session_id")
-    if previous_session_id:
-        delete_saved_track_ids(previous_session_id)
+    previous_history_session_id = (
+        session.get("spotify_previous_session_id")
+        or session.get("spotify_session_id")
+    )
+    current_session_id = session.get("spotify_session_id")
+    if current_session_id:
+        delete_saved_track_ids(current_session_id)
+    if previous_history_session_id:
+        session["spotify_previous_session_id"] = previous_history_session_id
 
     state = secrets.token_urlsafe(32)
     session["spotify_oauth_state"] = state
@@ -422,6 +430,13 @@ def spotify_callback():
         flash("Spotify is tijdelijk niet bereikbaar. Probeer het later opnieuw.", "error")
         return redirect(url_for("index"))
 
+    account_id = profile.get("id")
+    if not isinstance(account_id, str) or not account_id.strip():
+        app.logger.error("Spotify profile response did not contain a user ID")
+        clear_pending_spotify_login()
+        flash("Spotify heeft geen gebruikers-ID teruggestuurd. Probeer opnieuw.", "error")
+        return redirect(url_for("index"))
+
     session_id = session.get("spotify_session_id")
     if not session_id:
         flash("De SongSip-sessie is verlopen. Log opnieuw in met Spotify.", "error")
@@ -482,8 +497,13 @@ def spotify_callback():
 
     save_saved_track_ids(session_id, saved_track_ids)
     save_recent_genres(session_id, recent_genres)
+    migrate_session_history(
+        session.pop("spotify_previous_session_id", None),
+        account_id,
+    )
+    session["spotify_account_id"] = account_id
     session["spotify_user"] = {
-        "display_name": profile.get("display_name") or profile.get("id") or "Spotify-gebruiker",
+        "display_name": profile.get("display_name") or account_id or "Spotify-gebruiker",
         "saved_dataset_track_count": len(saved_track_ids),
         "recent_dataset_track_count": sum(recent_genres.values()),
     }
@@ -500,6 +520,10 @@ def spotify_logout():
     session_id = session.pop("spotify_session_id", None)
     if session_id:
         delete_saved_track_ids(session_id)
+        session["spotify_previous_session_id"] = (
+            session.get("spotify_previous_session_id") or session_id
+        )
+    session.pop("spotify_account_id", None)
     session.pop("spotify_user", None)
     flash("Je bent uitgelogd bij SongSip.", "success")
     return redirect(url_for("index"))
@@ -570,7 +594,8 @@ def songs_api():
     else:
         song = random.choice(tracks)
 
-    record_recommendation(session_id, song)
+    history_owner_id = session.get("spotify_account_id") or session_id
+    record_recommendation(history_owner_id, song)
 
     return jsonify(
         {
@@ -598,7 +623,8 @@ def rate_song():
     if type(rating) is not int or rating not in (-1, 1):
         return jsonify({"error": "Ongeldige beoordeling."}), 400
 
-    save_rating(session_id, track_id, rating)
+    history_owner_id = session.get("spotify_account_id") or session_id
+    save_rating(history_owner_id, track_id, rating)
 
     return jsonify({"success": True, "rating": rating})
 @app.route("/about")
@@ -614,7 +640,9 @@ def history():
         return redirect(url_for("index"))
     return render_template(
         "history.html",
-        recommendations=get_recommendations(session_id),
+        recommendations=get_recommendations(
+            session.get("spotify_account_id") or session_id
+        ),
     )
 
 
