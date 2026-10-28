@@ -597,6 +597,22 @@ def songs_api():
     history_owner_id = session.get("spotify_account_id") or session_id
     record_recommendation(history_owner_id, song)
 
+    song["spotify_url"] = (
+        f"https://open.spotify.com/track/{song['track_id']}"
+    )
+    song["album_image_url"] = None
+
+    try:
+        image_request = urllib.request.Request(
+            f"https://open.spotify.com/oembed?url="
+            f"{urllib.parse.quote(song['spotify_url'], safe='')}"
+        )
+        with urllib.request.urlopen(image_request, timeout=5) as response:
+            image_data = json.loads(response.read().decode())
+            song["album_image_url"] = image_data.get("thumbnail_url")
+    except (urllib.error.URLError, urllib.error.HTTPError, TimeoutError, ValueError):
+        pass
+
     return jsonify(
         {
             "song": song,

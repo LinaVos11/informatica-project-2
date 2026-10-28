@@ -96,7 +96,15 @@
                             ? 'Aanbevolen op basis van je opgeslagen nummers en recent afgespeelde muziek.'
                             : 'Dit nummer is willekeurig gekozen.'}
                         </p>
-
+                        
+                        ${song.album_image_url ? `
+                            <img
+                                src="${song.album_image_url}"
+                                alt="Albumcover van ${song.track_name}"
+                                class="album-cover"
+                                style="width: 300px; height: 300px; object-fit: cover;"
+                            >
+                        ` : ''}
                         <h4>${song.track_name}</h4>
                         <p><strong>Artiest:</strong> ${song.artists}</p>
                         <p><strong>Album:</strong> ${song.album_name}</p>
