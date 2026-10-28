@@ -103,6 +103,16 @@
                         <p><strong>Genre:</strong> ${song.track_genre}</p>
                         <p><strong>Populariteit:</strong> ${song.popularity}</p>
 
+                        <p>
+                            <a
+                                href="https://open.spotify.com/track/${encodeURIComponent(song.track_id)}"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                🎧 Luister op Spotify
+                            </a>
+                        </p>        
+
                         <div class="song-feedback">
                             <h4>Wat vind je van dit nummer?</h4>
 
