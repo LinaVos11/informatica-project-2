@@ -4,31 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My songs - SongSip</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='songsip.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='history.css') }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Monoton&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='songsip.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='history.css') }}">
 </head>
 <body>
-    <div class="blijvendebalk">
-        <header>
-            <img id="balk" src="{{ url_for('static', filename='images/bordeauxrood.png') }}" alt="Bordeaux rode balk">
-            <h1 id="Dehoofdtitel">
-                <a href="{{ url_for('index') }}">SONGSIP</a>
-            </h1>
-        </header>
-        <nav aria-label="Hoofdnavigatie">
-            <div class="dropdown">
-                <button class="dropbtn" type="button" aria-label="Navigatiemenu">Menu</button>
-                <div class="dropdown-content">
-                    <a href="{{ url_for('home') }}">Home</a>
-                    <a href="{{ url_for('about') }}">Why Songsip?</a>
-                    <a href="{{ url_for('history') }}" aria-current="page">My songs</a>
-                </div>
-            </div>
-        </nav>
-    </div>
+    {% include "_navigation.html" %}
 
     <main class="history-page">
         <h2>My songs</h2>

@@ -4,28 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>About us - SongSip</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Monoton&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='songsip.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='about-us.css') }}">
 </head>
 <body>
-    <div class="blijvendebalk">
-        <header>
-            <img id="balk" src="{{ url_for('static', filename='images/bordeauxrood.png') }}" alt="Bordeaux red banner">
-            <h1 id="Dehoofdtitel">
-                <a href="{{ url_for('index') }}">SongSip</a>
-            </h1>
-        </header>
-        <nav aria-label="Main navigation">
-            <div class="dropdown">
-                <button class="dropbtn" type="button">Menu</button>
-                <div class="dropdown-content">
-                    <a href="{{ url_for('home') }}">Home</a>
-                    <a href="{{ url_for('about') }}" aria-current="page">About us</a>
-                    <a href="{{ url_for('history') }}">My songs</a>
-                </div>
-            </div>
-        </nav>
-    </div>
+    {% include "_navigation.html" %}
 
     <main class="about-page">
         <article class="about-card">

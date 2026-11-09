@@ -2,12 +2,8 @@ body {
     min-height: 100vh;
     margin: 0;
     padding: 110px 20px 48px;
-    box-sizing: border-box;
     display: flex;
     flex-direction: column;
-    background-color: #1a0f11;
-    color: #f4efe6;
-    font-family: Georgia, serif;
 }
 
 .about-page {
@@ -18,15 +14,15 @@ body {
 
 .about-card {
     padding: clamp(24px, 5vw, 52px);
-    background-color: #2c1619;
-    border: 1px solid #d4af37;
+    background-color: var(--burgundy);
+    border: 1px solid var(--border);
     box-sizing: border-box;
     line-height: 1.75;
 }
 
 .about-card .eyebrow {
     margin: 0 0 8px;
-    color: #d4af37;
+    color: var(--muted);
     font-size: 0.85rem;
     letter-spacing: 0.12em;
     text-transform: uppercase;
@@ -34,24 +30,24 @@ body {
 
 .about-card h2 {
     margin: 0 0 24px;
-    color: #f4efe6;
+    color: var(--cream);
     font-size: clamp(2rem, 5vw, 3rem);
     font-weight: normal;
 }
 
 .about-card p {
-    color: #e2d5cd;
+    color: var(--muted);
 }
 
 .about-card .closing {
     margin-top: 28px;
-    color: #f4efe6;
+    color: var(--cream);
     font-size: 1.1rem;
 }
 
 .about-card .team-signoff {
     margin-bottom: 0;
-    color: #d4af37;
+    color: var(--cream);
     font-weight: bold;
 }
 
@@ -65,14 +61,14 @@ body {
 .about-slogans p {
     margin: 0;
     padding: 20px;
-    background-color: #2c1619;
-    border-left: 3px solid #d4af37;
-    color: #e2d5cd;
+    background-color: var(--burgundy);
+    border-left: 3px solid var(--border);
+    color: var(--muted);
     line-height: 1.6;
 }
 
 .about-slogans .short-slogan {
-    color: #d4af37;
+    color: var(--cream);
     font-size: 1.1rem;
     text-align: center;
 }
