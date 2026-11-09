@@ -4,7 +4,7 @@
 
 ## Welkom bij SongSip
 
-SongSip is een website waar je elke dag een nieuw liedje kan ontdekken. In plaats van eindeloos door afspeellijsten te scrollen, krijgt de bezoeker bij elk bezoek of bij een klik op de knop **één willekeurig nummer** voorgeschoteld.
+SongSip is een website waar je elke dag een nieuw liedje kan ontdekken. In plaats van eindeloos door afspeellijsten te scrollen, krijgt de bezoeker bij elk bezoek of bij een klik op de knop **één willekeurig nummer** voorgeschoteld of een willekeurig nummer van een gekozen genre. Je krijgt dan naast de titel, ook het album, de artiest en de spotifylink te zien.
 
 # Planning 
 | Week:  |  Wat moet af? |
