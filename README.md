@@ -138,4 +138,14 @@ Wij willen ons project laten beoordelen op de volgende domeinen:
 
 Een website waarop gebruikers met hun Spotify-account kunnen inloggen, een genre kunnen kiezen en dagelijks een nieuw nummer uit onze dataset kunnen ontdekken. De website onthoudt welke nummers de gebruiker al heeft gezien en welke nummers de gebruiker leuk of niet leuk vond.
 
+# Screenshots van onze uiteindelijke website:
+<img width="2251" height="1041" alt="Schermafbeelding 2026-11-09 203401" src="https://github.com/user-attachments/assets/901bb3a7-19dd-477a-8d6d-d890a94c26a7" />
+
+<img width="2373" height="1082" alt="Schermafbeelding 2026-11-09 203216" src="https://github.com/user-attachments/assets/d65f233d-4c13-4a55-a82b-47f410aa8f07" />
+
+<img width="2361" height="1051" alt="Schermafbeelding 2026-11-09 203340" src="https://github.com/user-attachments/assets/cd2d5c77-4f7f-4757-9c95-62eb1eed477c" />
+
+<img width="2353" height="973" alt="Schermafbeelding 2026-11-09 203046" src="https://github.com/user-attachments/assets/bd6b9119-4573-4214-940a-f19a236cd42b" />
+
+<img width="2376" height="911" alt="image" src="https://github.com/user-attachments/assets/a3d60df3-72ca-422c-b753-4fe9accb1e85" />
 
