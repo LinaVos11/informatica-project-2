@@ -5,12 +5,12 @@
             <a href="{{ url_for('index') }}">SongSip</a>
         </h1>
     </header>
-    <nav aria-label="Hoofdnavigatie">
+    <nav aria-label="Main navigation">
         <div class="dropdown">
             <button class="dropbtn" type="button">Menu</button>
             <div class="dropdown-content">
                 <a href="{{ url_for('home') }}" {% if request.endpoint == 'home' %}aria-current="page"{% endif %}>Home</a>
-                <a href="{{ url_for('about') }}" {% if request.endpoint == 'about' %}aria-current="page"{% endif %}>Why Songsip?</a>
+                <a href="{{ url_for('about') }}" {% if request.endpoint == 'about' %}aria-current="page"{% endif %}>Why SongSip?</a>
                 <a href="{{ url_for('history') }}" {% if request.endpoint == 'history' %}aria-current="page"{% endif %}>My songs</a>
             </div>
         </div>

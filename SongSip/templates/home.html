@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="nl">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Songsip - Ontdek nieuwe muziek!</title>
-    <!-- Connectie met Google Fonts voor titel font-->
+    <title>SongSip - Discover new music!</title>
+    <!-- Load the Monoton font used for the title. -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Monoton&display=swap" rel="stylesheet">
@@ -16,35 +16,35 @@
 
     <main>
         <section id="genre-kiezer">
-            <h2>Waar heb je vandaag zin in?</h2>
+            <h2>What are you in the mood for today?</h2>
 
-            <label for="genres">Kies een muziekcategorie:</label>
+            <label for="genres">Choose a music category:</label>
             <select id="genres">
-                <option value="rock-metal">Rock en metal</option>
-                <option value="pop-indie">Pop en indie</option>
+                <option value="rock-metal">Rock and metal</option>
+                <option value="pop-indie">Pop and indie</option>
                 <option value="asian">Asian</option>
-                <option value="electronic-dance">Elektronisch en dance</option>
-                <option value="hip-hop-rnb">Hip-hop en R&amp;B</option>
-                <option value="jazz-blues-funk-soul">Jazz, blues, funk en soul</option>
-                <option value="folk-country-acoustic">Folk, country en akoestisch</option>
-                <option value="latin-south-america">Latin en Zuid-Amerikaans</option>
-                <option value="reggae-afro-caribbean">Reggae en ritmes uit Afrika en het Caribisch gebied</option>
-                <option value="regional-international">Regionaal en internationaal</option>
-                <option value="classical-instrumental">Klassiek en instrumentaal</option>
-                <option value="mood-activities-other">Sfeer, activiteiten en overige</option>
-                <option value="random">Willekeurig</option>
+                <option value="electronic-dance">Electronic and dance</option>
+                <option value="hip-hop-rnb">Hip-hop and R&amp;B</option>
+                <option value="jazz-blues-funk-soul">Jazz, blues, funk and soul</option>
+                <option value="folk-country-acoustic">Folk, country and acoustic</option>
+                <option value="latin-south-america">Latin and South America</option>
+                <option value="reggae-afro-caribbean">Reggae and rhythms from Africa and the Caribbean</option>
+                <option value="regional-international">Regional and international</option>
+                <option value="classical-instrumental">Classical and instrumental</option>
+                <option value="mood-activities-other">Moods, activities and other</option>
+                <option value="random">Random</option>
             </select>
 
             <br><br>
-            <button id="ontdek-knop">
-                Verras me!
+            <button id="ontdek-knop" type="button">
+                Surprise me!
             </button>
         </section>
 
         <section id="resultaat">
-            <h3>Jouw nummer voor vandaag:</h3>
+            <h3>Your song for today:</h3>
             <div id="muziek-box">
-                <p>Aan het laden...</p>
+                <p>Loading...</p>
             </div>
         </section>
     </main>
@@ -56,16 +56,16 @@
         const muziekBox = document.getElementById('muziek-box');
 
         ontdekKnop.addEventListener('click', function() {
-            const gekozenGenre = genreSelect.value;
+            const selectedGenre = genreSelect.value;
             resultaatSectie.style.display = 'block';
-            const gekozenCategorie = genreSelect.options[genreSelect.selectedIndex].textContent;
-            muziekBox.innerHTML = '<p>Er wordt gezocht in ' + gekozenCategorie + '...</p>';
+            const selectedCategory = genreSelect.options[genreSelect.selectedIndex].textContent;
+            muziekBox.innerHTML = '<p>Searching ' + selectedCategory + '...</p>';
 
-            fetch('/api/songs?genre=' + encodeURIComponent(gekozenGenre))
+            fetch('/api/songs?genre=' + encodeURIComponent(selectedGenre))
                 .then(function(response) {
                     return response.json().then(function(data) {
                         if (!response.ok) {
-                            throw new Error(data.error || 'Nummers konden niet worden geladen.');
+                            throw new Error(data.error || 'Songs could not be loaded.');
                         }
                         return data;
                     });
@@ -76,23 +76,23 @@
 
                     muziekBox.innerHTML = `
                         <p>${data.personalized
-                            ? 'Aanbevolen op basis van je opgeslagen nummers en recent afgespeelde muziek.'
-                            : 'Dit nummer is willekeurig gekozen.'}
+                            ? 'Recommended based on your saved tracks and recently played music.'
+                            : 'This song was chosen at random.'}
                         </p>
                         
                         ${song.album_image_url ? `
                             <img
                                 src="${song.album_image_url}"
-                                alt="Albumcover van ${song.track_name}"
+                                alt="Album cover for ${song.track_name}"
                                 class="album-cover"
                                 style="width: 300px; height: 300px; object-fit: cover;"
                             >
                         ` : ''}
                         <h4>${song.track_name}</h4>
-                        <p><strong>Artiest:</strong> ${song.artists}</p>
+                        <p><strong>Artist:</strong> ${song.artists}</p>
                         <p><strong>Album:</strong> ${song.album_name}</p>
                         <p><strong>Genre:</strong> ${song.track_genre}</p>
-                        <p><strong>Populariteit:</strong> ${song.popularity}</p>
+                        <p><strong>Popularity:</strong> ${song.popularity}</p>
 
                         <p>
                             <a
@@ -100,12 +100,12 @@
                                 target="_blank"
                                 rel="noopener noreferrer"
                             >
-                                🎧 Luister op Spotify
+                                🎧 Listen on Spotify
                             </a>
                         </p>        
 
                         <div class="song-feedback">
-                            <h4>Wat vind je van dit nummer?</h4>
+                            <h4>What do you think of this song?</h4>
 
                             <button id="like-knop" type="button">
                                 👍 Like
@@ -126,7 +126,7 @@
 
                         likeKnop.disabled = true;
                         dislikeKnop.disabled = true;
-                        bericht.textContent = 'Beoordeling opslaan...';
+                        bericht.textContent = 'Saving your rating...';
 
                         fetch('/api/rating', {
                             method: 'POST',
@@ -142,7 +142,7 @@
                             return response.json().then(function(data) {
                                 if (!response.ok) {
                                     throw new Error(
-                                        data.error || 'Opslaan is niet gelukt.'
+                                        data.error || 'Could not save your rating.'
                                     );
                                 }
                                 return data;
@@ -150,8 +150,8 @@
                         })
                         .then(function() {
                             bericht.textContent = rating === 1
-                                ? 'Je vindt dit nummer leuk! 👍'
-                                : 'Je vindt dit nummer niet leuk. 👎';
+                                ? 'You liked this song! 👍'
+                                : 'You disliked this song. 👎';
 
                             likeKnop.disabled = false;
                             dislikeKnop.disabled = false;
@@ -181,7 +181,7 @@
 
                 .catch(function(error) {
                     console.error(error);
-                    muziekBox.textContent = error.message || 'Er is iets misgegaan bij het ophalen van het nummer.';
+                    muziekBox.textContent = error.message || 'Something went wrong while loading the song.';
                 });
         });
     </script>

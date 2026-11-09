@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="nl">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,18 +15,18 @@
 
     <main class="history-page">
         <h2>My songs</h2>
-        <p>Alle nummers die aan jou zijn aanbevolen.</p>
+        <p>All the songs recommended to you.</p>
 
         {% if recommendations %}
             <div class="history-table-wrapper">
                 <table class="history-table">
                     <thead>
                         <tr>
-                            <th scope="col">Nummer</th>
-                            <th scope="col">Artiest</th>
+                            <th scope="col">Song</th>
+                            <th scope="col">Artist</th>
                             <th scope="col">Album</th>
-                            <th scope="col">Jouw beoordeling</th>
-                            <th scope="col">Aanbevolen op (UTC)</th>
+                            <th scope="col">Your rating</th>
+                            <th scope="col">Recommended on (UTC)</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -37,11 +37,11 @@
                                 <td>{{ song.album_name }}</td>
                                 <td>
                                     {% if song.rating == 1 %}
-                                        👍 Geliked
+                                        👍 Liked
                                     {% elif song.rating == -1 %}
                                         👎 Disliked
                                     {% else %}
-                                        Nog niet beoordeeld
+                                        Not rated yet
                                     {% endif %}
                                 </td>
                                 <td>{{ song.recommended_at }}</td>
@@ -51,7 +51,7 @@
                 </table>
             </div>
         {% else %}
-            <p class="empty-history">Je hebt nog geen aanbevolen nummers. Ontdek eerst een nummer via Home.</p>
+            <p class="empty-history">You don't have any recommended songs yet. Discover a song on the Home page first.</p>
         {% endif %}
     </main>
 

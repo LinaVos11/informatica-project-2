@@ -288,7 +288,7 @@ def index():
     if session_id and get_saved_track_ids(session_id) is None:
         session.pop("spotify_user", None)
         session.pop("spotify_session_id", None)
-        flash("Log opnieuw in om je opgeslagen Spotify-nummers te controleren.", "error")
+        flash("Please sign in again to check your saved Spotify tracks.", "error")
     return render_template("index.html")
 
 
@@ -296,10 +296,10 @@ def index():
 def home():
     session_id = session.get("spotify_session_id")
     if not session.get("spotify_user") or not session_id:
-        flash("Log in met Spotify om nummers te ontdekken.", "error")
+        flash("Sign in with Spotify to discover songs.", "error")
         return redirect(url_for("index"))
     if get_saved_track_ids(session_id) is None:
-        flash("Log opnieuw in zodat SongSip je opgeslagen nummers kan controleren.", "error")
+        flash("Please sign in again so SongSip can check your saved tracks.", "error")
         return redirect(url_for("index"))
     return render_template("home.html")
 
@@ -309,8 +309,8 @@ def spotify_login():
     client_id = os.environ.get("SPOTIFY_CLIENT_ID")
     if not client_id or not os.environ.get("SPOTIFY_CLIENT_SECRET"):
         flash(
-            "Spotify is nog niet ingesteld. Stel SPOTIFY_CLIENT_ID en "
-            "SPOTIFY_CLIENT_SECRET in de terminal in en start de app opnieuw.",
+            "Spotify is not configured yet. Set SPOTIFY_CLIENT_ID and "
+            "SPOTIFY_CLIENT_SECRET in the terminal, then restart the app.",
             "error",
         )
         return redirect(url_for("index"))
@@ -345,23 +345,23 @@ def spotify_login():
 def spotify_callback():
     error = request.args.get("error")
     if error:
-        flash(f"Spotify-login is niet voltooid: {error}.", "error")
+        flash(f"Spotify sign-in was not completed: {error}.", "error")
         return redirect(url_for("index"))
 
     expected_state = session.pop("spotify_oauth_state", None)
     returned_state = request.args.get("state", "")
     authorization_code = request.args.get("code")
     if not expected_state or not secrets.compare_digest(expected_state, returned_state):
-        flash("De Spotify-login kon niet veilig worden bevestigd. Probeer opnieuw.", "error")
+        flash("Spotify sign-in could not be verified securely. Please try again.", "error")
         return redirect(url_for("index"))
     if not authorization_code:
-        flash("Spotify heeft geen autorisatiecode teruggestuurd. Probeer opnieuw.", "error")
+        flash("Spotify did not return an authorization code. Please try again.", "error")
         return redirect(url_for("index"))
 
     client_id = os.environ.get("SPOTIFY_CLIENT_ID")
     client_secret = os.environ.get("SPOTIFY_CLIENT_SECRET")
     if not client_id or not client_secret:
-        flash("De Spotify-appgegevens ontbreken. Stel ze in en probeer opnieuw.", "error")
+        flash("Spotify app credentials are missing. Configure them and try again.", "error")
         return redirect(url_for("index"))
 
     credentials = base64.b64encode(f"{client_id}:{client_secret}".encode()).decode()
@@ -386,24 +386,24 @@ def spotify_callback():
             token_data = json.loads(response.read().decode())
     except urllib.error.HTTPError as exc:
         app.logger.warning("Spotify token exchange returned HTTP %s", exc.code)
-        flash("Spotify kon de login niet afronden. Controleer de app-instellingen.", "error")
+        flash("Spotify could not complete sign-in. Check the app settings.", "error")
         return redirect(url_for("index"))
     except urllib.error.URLError:
         app.logger.exception("Could not reach Spotify token endpoint")
-        flash("Spotify is tijdelijk niet bereikbaar. Probeer het later opnieuw.", "error")
+        flash("Spotify is temporarily unavailable. Please try again later.", "error")
         return redirect(url_for("index"))
 
     access_token = token_data.get("access_token")
     if not access_token:
         app.logger.error("Spotify token response did not contain an access token")
-        flash("Spotify heeft geen toegangstoken teruggestuurd. Probeer opnieuw.", "error")
+        flash("Spotify did not return an access token. Please try again.", "error")
         return redirect(url_for("index"))
     granted_scopes = set(token_data.get("scope", "").split())
     if not {"user-library-read", "user-read-recently-played"} <= granted_scopes:
         session.pop("spotify_session_id", None)
         flash(
-            "SongSip heeft niet alle benodigde Spotify-toestemmingen gekregen. "
-            "Log opnieuw in en geef die toestemming.",
+            "SongSip did not receive all the required Spotify permissions. "
+            "Please sign in again and grant those permissions.",
             "error",
         )
         return redirect(url_for("index"))
@@ -419,27 +419,27 @@ def spotify_callback():
         app.logger.warning("Spotify profile request returned HTTP %s", exc.code)
         clear_pending_spotify_login()
         flash(
-            f"Je Spotify-profiel kon niet worden opgehaald (HTTP {exc.code}). "
-            "Controleer de Spotify-app en probeer opnieuw.",
+            f"Your Spotify profile could not be retrieved (HTTP {exc.code}). "
+            "Check the Spotify app and try again.",
             "error",
         )
         return redirect(url_for("index"))
     except urllib.error.URLError:
         app.logger.exception("Could not reach Spotify profile endpoint")
         clear_pending_spotify_login()
-        flash("Spotify is tijdelijk niet bereikbaar. Probeer het later opnieuw.", "error")
+        flash("Spotify is temporarily unavailable. Please try again later.", "error")
         return redirect(url_for("index"))
 
     account_id = profile.get("id")
     if not isinstance(account_id, str) or not account_id.strip():
         app.logger.error("Spotify profile response did not contain a user ID")
         clear_pending_spotify_login()
-        flash("Spotify heeft geen gebruikers-ID teruggestuurd. Probeer opnieuw.", "error")
+        flash("Spotify did not return a user ID. Please try again.", "error")
         return redirect(url_for("index"))
 
     session_id = session.get("spotify_session_id")
     if not session_id:
-        flash("De SongSip-sessie is verlopen. Log opnieuw in met Spotify.", "error")
+        flash("Your SongSip session has expired. Please sign in with Spotify again.", "error")
         return redirect(url_for("index"))
     try:
         saved_track_ids = fetch_saved_dataset_track_ids(access_token)
@@ -447,23 +447,23 @@ def spotify_callback():
         if exc.status_code == 403:
             app.logger.warning("Spotify denied access to saved tracks (HTTP 403)")
             flash(
-                "Spotify heeft de toegang tot opgeslagen nummers geweigerd. "
-                "Controleer de app-toegang en probeer opnieuw.",
+                "Spotify denied access to your saved tracks. "
+                "Check the app permissions and try again.",
                 "error",
             )
         elif exc.status_code == 401:
             app.logger.warning("Spotify access token was rejected for saved tracks")
-            flash("Spotify-login is verlopen. Log opnieuw in.", "error")
+            flash("Your Spotify sign-in has expired. Please sign in again.", "error")
         elif exc.status_code:
             app.logger.warning(
                 "Spotify saved-tracks request returned HTTP %s", exc.status_code
             )
-            flash("De opgeslagen Spotify-nummers konden niet worden opgehaald.", "error")
+            flash("Your saved Spotify tracks could not be retrieved.", "error")
         else:
             app.logger.exception("Could not retrieve the complete Spotify saved-tracks list")
             flash(
-                "De volledige opgeslagen Spotify-lijst kon niet veilig worden opgehaald. "
-                "Probeer het later opnieuw.",
+                "The complete list of saved Spotify tracks could not be retrieved safely. "
+                "Please try again later.",
                 "error",
             )
         return redirect(url_for("index"))
@@ -474,23 +474,23 @@ def spotify_callback():
         if exc.status_code == 403:
             app.logger.warning("Spotify denied access to recently played tracks (HTTP 403)")
             flash(
-                "Spotify heeft de toegang tot recent afgespeelde nummers geweigerd. "
-                "Controleer de app-toegang en probeer opnieuw.",
+                "Spotify denied access to your recently played tracks. "
+                "Check the app permissions and try again.",
                 "error",
             )
         elif exc.status_code == 401:
             app.logger.warning("Spotify access token was rejected for recently played tracks")
-            flash("Spotify-login is verlopen. Log opnieuw in.", "error")
+            flash("Your Spotify sign-in has expired. Please sign in again.", "error")
         elif exc.status_code:
             app.logger.warning(
                 "Spotify recently-played request returned HTTP %s", exc.status_code
             )
-            flash("Recente Spotify-nummers konden niet worden opgehaald.", "error")
+            flash("Your recent Spotify tracks could not be retrieved.", "error")
         else:
             app.logger.exception("Could not retrieve recently played Spotify tracks")
             flash(
-                "De recente Spotify-nummers konden niet veilig worden opgehaald. "
-                "Probeer het later opnieuw.",
+                "Your recent Spotify tracks could not be retrieved safely. "
+                "Please try again later.",
                 "error",
             )
         return redirect(url_for("index"))
@@ -503,13 +503,13 @@ def spotify_callback():
     )
     session["spotify_account_id"] = account_id
     session["spotify_user"] = {
-        "display_name": profile.get("display_name") or account_id or "Spotify-gebruiker",
+        "display_name": profile.get("display_name") or account_id or "Spotify user",
         "saved_dataset_track_count": len(saved_track_ids),
         "recent_dataset_track_count": sum(recent_genres.values()),
     }
     flash(
-        f"Spotify-login gelukt! {len(saved_track_ids)} opgeslagen nummers worden overgeslagen "
-        f"en {sum(recent_genres.values())} recente afspeelbeurten helpen bij de aanbevelingen.",
+        f"Spotify sign-in successful! {len(saved_track_ids)} saved tracks will be skipped, "
+        f"and {sum(recent_genres.values())} recent plays will help personalize recommendations.",
         "success",
     )
     return redirect(url_for("index"))
@@ -525,7 +525,7 @@ def spotify_logout():
         )
     session.pop("spotify_account_id", None)
     session.pop("spotify_user", None)
-    flash("Je bent uitgelogd bij SongSip.", "success")
+    flash("You have signed out of SongSip.", "success")
     return redirect(url_for("index"))
 
 
@@ -533,10 +533,10 @@ def spotify_logout():
 def songs_api():
     session_id = session.get("spotify_session_id")
     if not session.get("spotify_user") or not session_id:
-        return jsonify({"error": "Log in met Spotify om opgeslagen nummers te controleren."}), 401
+        return jsonify({"error": "Sign in with Spotify to check your saved tracks."}), 401
     saved_track_ids = get_saved_track_ids(session_id)
     if saved_track_ids is None:
-        return jsonify({"error": "Log opnieuw in om je Spotify-bibliotheek te controleren."}), 401
+        return jsonify({"error": "Please sign in again to check your Spotify library."}), 401
 
     genre = (request.args.get("genre") or "").strip().lower()
     all_tracks = load_tracks()
@@ -558,7 +558,7 @@ def songs_api():
     elif genre and genre not in {"random", "willekeurig"}:
         normalized_genre = "".join(character for character in genre if character.isalnum())
         if not normalized_genre:
-            return jsonify({"error": f"Ongeldig genre '{genre}'"}), 400
+            return jsonify({"error": f"Invalid genre '{genre}'"}), 400
         tracks = [
             track
             for track in tracks
@@ -571,12 +571,12 @@ def songs_api():
         ]
 
     if not tracks:
-        return jsonify({"error": f"Geen nummers gevonden voor genre '{genre}'"}), 404
+        return jsonify({"error": f"No songs found for genre '{genre}'"}), 404
 
     tracks = [track for track in tracks if track.get("track_id") not in saved_track_ids]
     if not tracks:
         return jsonify(
-            {"error": "Alle nummers in deze categorie zijn al opgeslagen in je Spotify-bibliotheek."}
+            {"error": "All songs in this category are already saved in your Spotify library."}
         ), 404
 
     candidate_counts = Counter(track.get("track_genre") for track in tracks)
@@ -627,17 +627,17 @@ def rate_song():
     session_id = session.get("spotify_session_id")
 
     if not session_id or not session.get("spotify_user"):
-        return jsonify({"error": "Log eerst in."}), 401
+        return jsonify({"error": "Please sign in first."}), 401
 
     data = request.get_json(silent=True) or {}
     track_id = data.get("track_id")
     rating = data.get("rating")
 
     if not isinstance(track_id, str) or not track_id.strip():
-        return jsonify({"error": "Ongeldig nummer."}), 400
+        return jsonify({"error": "Invalid song."}), 400
 
     if type(rating) is not int or rating not in (-1, 1):
-        return jsonify({"error": "Ongeldige beoordeling."}), 400
+        return jsonify({"error": "Invalid rating."}), 400
 
     history_owner_id = session.get("spotify_account_id") or session_id
     save_rating(history_owner_id, track_id, rating)
@@ -652,7 +652,7 @@ def about():
 def history():
     session_id = session.get("spotify_session_id")
     if not session.get("spotify_user") or not session_id:
-        flash("Log in met Spotify om je aanbevolen nummers te bekijken.", "error")
+        flash("Sign in with Spotify to view your recommended songs.", "error")
         return redirect(url_for("index"))
     return render_template(
         "history.html",

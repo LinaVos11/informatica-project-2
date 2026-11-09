@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="nl">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Muziek Project - Inloggen</title>
+    <title>SongSip - Sign in</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='songsip.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='index.css') }}">
-    <!-- Connectie met Google Fonts voor titel font-->
+    <!-- Load the Monoton font used for the title. -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Monoton&display=swap" rel="stylesheet">
@@ -14,8 +14,8 @@
 <body>
 
     <header class="login-header">
-        <h1 id="Dehoofdtitel">Song sip</h1>
-        <p>Ontdek elke dag een nieuw nummer op basis van uw stemming.</p>
+        <h1 id="Dehoofdtitel">SongSip</h1>
+        <p>Discover a new song every day, picked to match your mood.</p>
 
         {% with messages = get_flashed_messages(with_categories=true) %}
             {% for category, message in messages %}
@@ -25,20 +25,20 @@
 
         {% if session.get('spotify_user') %}
             <p class="login-success">
-                Ingelogd als <strong>{{ session['spotify_user']['display_name'] }}</strong>
+                Signed in as <strong>{{ session['spotify_user']['display_name'] }}</strong>
             </p>
             <p>
-                SongSip gebruikt genres van opgeslagen nummers en je 50 meest recente
-                afspeelbeurten die ook in onze dataset staan om passende genres vaker aan te
-                bevelen. Alleen overeenkomende Spotify-ID's en genre-aantallen worden lokaal
-                opgeslagen en verwijderd wanneer je uitlogt.
+                SongSip uses genres from your saved tracks and your 50 most recent plays that
+                are also in our dataset to recommend genres you may enjoy more often. Only
+                matching Spotify IDs and genre counts are stored locally, and they are deleted
+                when you log out.
             </p>
-            <a class="continue-link" href="{{ url_for('home') }}">Ga naar de nummers</a>
+            <a class="continue-link" href="{{ url_for('home') }}">Discover songs</a>
             <form action="{{ url_for('spotify_logout') }}" method="post">
-                <button id="spotify-login-knop" type="submit">LOG UIT</button>
+                <button id="spotify-login-knop" type="submit">LOG OUT</button>
             </form>
         {% else %}
-            <a id="spotify-login-knop" href="{{ url_for('spotify_login') }}">LOG IN MET SPOTIFY</a>
+            <a id="spotify-login-knop" href="{{ url_for('spotify_login') }}">LOG IN WITH SPOTIFY</a>
         {% endif %}
     </header>
 
