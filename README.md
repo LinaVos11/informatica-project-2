@@ -12,6 +12,14 @@ Wij willen ons project laten beoordelen op de volgende domeinen:
 2. Interactie
 3. Database
 
+### Word-bestanden
+Om onze README nog een beetje overzichtelijk te houden, hebben we in onze .zip-map ook een kopje 'Word-bestanden' staan. In dat mapje zitten de volgende bestanden:
+* Gebruikersonderzoek met zowel resultaten als conclusie
+* Het vooronderzoek van het toevoegen van een database aan de website
+* De productvisie en User stories (product owner)
+* Ons plan voor de website (het design en de mood)
+* Ons idee van Songsip uitgewerkt op een poster 
+
 # Planning 
 | Week:  |  Wat moet af? |
 |---|---|
