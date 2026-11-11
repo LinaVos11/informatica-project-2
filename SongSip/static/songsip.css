@@ -141,6 +141,25 @@ button {
     color: var(--cream);
 }
 
+/* Shared SongSip tagline below the fixed navigation */
+
+.site-tagline {
+    position: fixed;
+    top: 70px;
+    left: 0;
+    z-index: 997;
+    width: 100%;
+    min-height: 38px;
+    margin: 0;
+    padding: 8px 16px;
+    background-color: var(--background);
+    border-bottom: 1px solid var(--border);
+    color: var(--cream);
+    font-size: clamp(0.85rem, 2.5vw, 1rem);
+    line-height: 1.35;
+    text-align: center;
+}
+
 /* Algemene knoppen */
 
 button {
@@ -199,7 +218,7 @@ select {
 
 @media (max-width: 600px) {
     body {
-        padding: 90px 16px 30px;
+        padding: 120px 16px 30px;
     }
 
     main {
