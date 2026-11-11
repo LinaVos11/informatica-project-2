@@ -22,6 +22,7 @@ Om onze README nog een beetje overzichtelijk te houden, hebben we in onze .zip-m
 * Ons idee van Songsip uitgewerkt op een poster 
 * Onze eindpresentatie
 * Uitleg over onze database (beschrijving en verantwoording voor onze keuzes)
+* Ons logboek
 
 # Planning 
 | Week:  |  Wat moet af? |
