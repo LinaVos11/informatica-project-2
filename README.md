@@ -100,7 +100,7 @@ Wij willen ons project laten beoordelen op de volgende domeinen:
 
 - Flask-project opzetten
 - HTML/CSS-structuur maken
-- Dataset inladen
+- Dataset inladen (onze dataset: https://www.kaggle.com/datasets/saichaitanyareddyai/spotify-tracks-dataset-audio-features/data?utm_source=chatgpt.com)
 - Genrekeuze maken
 - Nummer selecteren en informatie weergeven
 
