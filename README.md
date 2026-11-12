@@ -10,7 +10,8 @@ SongSip is een website waar je elke dag een nieuw liedje kan ontdekken. In plaat
 Wij willen ons project laten beoordelen op de volgende domeinen:
 1. Website
 2. Interactie
-3. Database
+3. Database 
+(uitleg en extra informatie, zie bestanden hieronder)
 
 ### Word-bestanden
 Om onze README nog een beetje overzichtelijk te houden, hebben we in onze .zip-map ook een kopje 'Word-bestanden' staan. In dat mapje zitten de volgende bestanden:
@@ -19,6 +20,9 @@ Om onze README nog een beetje overzichtelijk te houden, hebben we in onze .zip-m
 * De productvisie en User stories (product owner)
 * Ons plan voor de website (het design en de mood)
 * Ons idee van Songsip uitgewerkt op een poster 
+* Onze eindpresentatie
+* Uitleg over onze database (beschrijving en verantwoording voor onze keuzes)
+* Ons logboek
 
 # Planning 
 | Week:  |  Wat moet af? |
